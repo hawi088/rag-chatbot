@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+venv/
+.venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+test-results/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Secrets & Environment
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Data
+data/
+data/raw/
+data/processed/
+vector_store/
+*.faiss
+*.npy
+*.npz
+*.chroma
+
+# Logs
+logs/
+*.log
+
+# Models
+*.h5
+*.pb
+*.ckpt
+*.pt
+*.pth
+checkpoints/
+
+# Temporary
+tmp/
+*.tmp
+*.bak
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Project Specific
+outputs/
+datasets/
+!.gitkeep

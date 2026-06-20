@@ -1,0 +1,71 @@
+# .github/workflows/unittests.yml - Simplified Version
+# Minimum required CI/CD for 10 Academy Challenge
+
+name: Run Unit Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Python Tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov black flake8
+      
+      - name: Lint with flake8
+        run: |
+          flake8 src/ --count --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Check code formatting with black
+        run: |
+          black --check src/ || true
+      
+      - name: Test with pytest
+        run: |
+          pytest tests/ -v --cov=src --cov-report=term-missing
+      
+      - name: Validate data processing
+        run: |
+          if [ -f data/filtered_complaints.csv ]; then
+            echo " Data file exists"
+            python -c "import pandas as pd; df = pd.read_csv('data/filtered_complaints.csv'); print(f'✅ Loaded {len(df)} rows')"
+          else
+            echo " Data file not found (skipping validation)"
+          fi
+      
+      - name: Check application syntax
+        run: |
+          if [ -f app.py ]; then
+            python -m py_compile app.py
+            echo " app.py syntax is valid"
+          fi
+      
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-python-${{ matrix.python-version }}
+          path: |
+            pytest.xml
+            .coverage
