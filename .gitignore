@@ -16,7 +16,7 @@ env/
 htmlcov/
 coverage.xml
 test-results/
-
+data/
 # Jupyter
 .ipynb_checkpoints/
 
