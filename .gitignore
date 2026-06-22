@@ -68,3 +68,30 @@ Thumbs.db
 outputs/
 datasets/
 !.gitkeep
+# ============================================
+# DATA FILES (LARGE - DO NOT COMMIT)
+# ============================================
+data/raw/*.csv
+data/processed/*.csv
+data/filtered_complaints*.csv
+*.sample.csv
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ============================================
+# MODEL FILES
+# ============================================
+*.safetensors
+*.onnx
+*.bin
+*.npy
+*.pkl
+*.faiss
+notebooks/models/
+models/
+
+# ============================================
+# VECTOR STORE
+# ============================================
+vector_store/
+!vector_store/.gitkeep
